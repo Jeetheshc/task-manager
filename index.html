@@ -43,7 +43,6 @@ tr:nth-child(even) td { background-color: #fafaf9; }
 tr:hover td { background: #f0f9ff; }
 td:first-child { text-align: left; font-weight: 600; font-size: 16px; padding-left: 30px; color: #0f172a; }
 
-/* Dynamic Due Date Input */
 .due-input {
     width: 45px; padding: 6px; border-radius: 8px; border: 2px solid #cbd5e1;
     text-align: center; font-weight: 700; font-size: 14px; color: #b45309; background: #fffbeb;
@@ -51,7 +50,6 @@ td:first-child { text-align: left; font-weight: 600; font-size: 16px; padding-le
 }
 .due-input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
 
-/* Remarks UI */
 .remark-wrapper { display: flex; gap: 6px; justify-content: center; align-items: center; padding-right: 20px;}
 .remark-input { width: 130px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; outline: none; transition: 0.2s;}
 .remark-input:focus { border-color: #2563eb; }
@@ -161,17 +159,22 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
     </div>
 </div>
 
-<form id="sheetForm" action="YOUR_WEB_APP_URL_HERE" method="POST" target="hiddenFrame">
+<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField" value="saveTask">
     <input type="hidden" name="task" id="task">
     <input type="hidden" name="month" id="month">
     <input type="hidden" name="status" id="statusField">
     <input type="hidden" name="date" id="date">
     <input type="hidden" name="dueDate" id="dueDateField"> 
-    <input type="hidden" name="remark" id="remarkField"> </form>
-<iframe name="hiddenFrame" id="hiddenFrame" style="display:none" onload="handleIframeLoad()"></iframe>
+    <input type="hidden" name="remark" id="remarkField"> 
+</form>
+
+<iframe name="hiddenFrame" id="hiddenFrame" style="display:none"></iframe>
 
 <script>
+// --- Initialize the iframe listener cleanly to prevent errors ---
+document.getElementById('hiddenFrame').addEventListener('load', handleIframeLoad);
+
 // --- Core Map for Date Logic ---
 const monthMap = { 'JUNE': 5, 'JULY': 6, 'AUGUST': 7, 'SEPTEMBER': 8, 'OCTOBER': 9, 'NOVEMBER': 10, 'DECEMBER': 11 };
 
@@ -230,7 +233,7 @@ function saveTask(box, task, month){
     const timestamp = new Date().toLocaleString();
     const dueValue = document.getElementById('due_' + task).value;
 
-    document.getElementById("actionField").value = "saveTask"; // Routing instruction
+    document.getElementById("actionField").value = "saveTask"; 
     document.getElementById("task").value = task;
     document.getElementById("month").value = month;
     document.getElementById("statusField").value = box.checked;
@@ -260,7 +263,7 @@ function submitRemark(task) {
         return;
     }
 
-    document.getElementById("actionField").value = "saveRemark"; // Routing instruction
+    document.getElementById("actionField").value = "saveRemark"; 
     document.getElementById("task").value = task;
     document.getElementById("remarkField").value = remarkText;
 
@@ -268,7 +271,6 @@ function submitRemark(task) {
     setLoader("show", "Saving Remark...");
     document.getElementById("sheetForm").submit();
     
-    // Clear the input field after sending
     remarkInput.value = "";
 
     triggerPopup("📝", "Remark Logged", `Your note for ${task} was securely sent to Sheet2.`, "#1e3a8a");
@@ -313,9 +315,9 @@ function closePopup(event) {
     }
 }
 
-// Replace YOUR_WEB_APP_URL_HERE with your actual deployment link in both places below!
+// Script fetching URL properly replaced
 const script = document.createElement("script");
-script.src = "YOUR_WEB_APP_URL_HERE?callback=loadSavedData";
+script.src = "https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec?callback=loadSavedData";
 document.body.appendChild(script);
 </script>
 
