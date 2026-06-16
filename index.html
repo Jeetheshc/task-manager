@@ -481,19 +481,43 @@ function loadSavedData(data){
     setLoader("hide");
 }
 
-// --- Smooth Popup Logic ---
+// --- Smooth Popup Logic (Upgraded for Legacy Data) ---
 function showDate(icon) {
     const savedDate = icon.getAttribute("data-date");
     const popup = document.getElementById("datePopup");
     const title = document.getElementById("popupTitle");
     const message = document.getElementById("popupMessage");
     
-    if(savedDate) {
+    // Find the checkbox that belongs to this specific calendar icon
+    const relatedCheckboxId = icon.id.replace("date_", "");
+    const checkbox = document.getElementById(relatedCheckboxId);
+    
+    if (savedDate && savedDate.trim() !== "") {
+        // SCENARIO 1: We have a valid date saved
+        
+        // Let's format the Google Sheets date to look clean just in case
+        let displayDate = savedDate;
+        try {
+            const d = new Date(savedDate);
+            if (!isNaN(d.getTime())) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                displayDate = d.toLocaleDateString('en-US', options);
+            }
+        } catch(e) {}
+
         title.innerText = "Task Verified";
-        message.innerHTML = `This task was securely recorded on:<br><br><strong style="color:#0f172a; font-size: 16px;">${savedDate}</strong>`;
+        message.innerHTML = `This task was securely recorded on:<br><br><strong style="color:#0f172a; font-size: 16px;">${displayDate}</strong>`;
+        
+    } else if (checkbox && checkbox.checked && !isSubmitting) {
+        // SCENARIO 2: Box is checked, system is NOT syncing, but date is missing
+        // This means it is an old record from before the update!
+        title.innerText = "Legacy Record";
+        message.innerHTML = `This task was completed before the date-tracking feature was installed.<br><br><span style="font-size: 13px; color: #64748b;">To update this, uncheck and re-check the box to assign today's date.</span>`;
+        
     } else {
+        // SCENARIO 3: System is currently sending/receiving data
         title.innerText = "Syncing Record...";
-        message.innerText = "Data is still syncing with the server. Please check back in a moment.";
+        message.innerText = "Data is currently syncing with the secure server. Please wait a moment.";
     }
     
     popup.classList.add("active");
