@@ -5,34 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Task Manager - Manjeshwar Grama Panchayat</title>
 
-<!-- Premium Modern Font -->
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Enterprise & Professional Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Beautiful moving gradient background */
+/* Professional Soft Blue-Gray Background */
 body {
-    background: linear-gradient(-45deg, #4f46e5, #0ea5e9, #10b981, #3b82f6);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: #ffffff;
+    background-color: #f1f5f9;
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #0f172a;
     min-height: 100vh;
     padding: 40px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 .container {
@@ -42,39 +36,41 @@ body {
 }
 
 /* --------------------------------------
-   GLASSMORPHISM DESIGN
+   ENTERPRISE CARD DESIGN (Clean Frosted White)
 --------------------------------------- */
 .card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
     overflow: hidden;
 }
 
+/* Official Navy Blue Header */
 .header {
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 30px;
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    padding: 35px 20px;
     text-align: center;
-    color: white;
+    color: #ffffff;
+    border-bottom: 4px solid #10b981; /* Subtle touch of official green */
 }
 
 .header h1 {
-    font-size: 38px;
+    font-size: 32px;
     font-weight: 700;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     margin-bottom: 8px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .header h2 {
-    font-size: 20px;
-    font-weight: 400;
-    letter-spacing: 3px;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #bfdbfe;
+    text-transform: uppercase;
 }
 
 table {
@@ -82,133 +78,147 @@ table {
     border-collapse: collapse;
 }
 
+/* Crisp, Readable Table Headers */
 th {
-    background: rgba(255, 255, 255, 0.1);
-    color: #f8fafc;
-    padding: 20px 15px;
+    background: #f8fafc;
+    color: #475569;
+    padding: 18px 15px;
     font-weight: 600;
-    letter-spacing: 1.5px;
-    font-size: 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #e2e8f0;
 }
 
 td {
     padding: 20px 10px;
     text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: #f1f5f9;
-    transition: background 0.3s;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    transition: background 0.2s;
+}
+
+/* Striped rows for better data tracking */
+tr:nth-child(even) td {
+    background-color: #fafaf9;
 }
 
 tr:hover td {
-    background: rgba(255, 255, 255, 0.05);
+    background: #f0f9ff; /* Very subtle blue highlight on hover */
 }
 
 td:first-child {
     text-align: left;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
     padding-left: 40px;
+    color: #0f172a;
 }
 
-/* Premium Badge for Due Date */
+/* Professional Due Date Badge (Subtle Amber/Red) */
 .due-badge {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #fffbeb;
+    border: 1px solid #fde68a;
     padding: 6px 14px;
     border-radius: 20px;
-    font-weight: 700;
-    font-size: 14px;
-    color: #fde047; /* Soft yellow to stand out */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    font-weight: 600;
+    font-size: 13px;
+    color: #b45309;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .cell-wrapper {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 /* --------------------------------------
-   HIGH-VISIBILITY CHECKBOXES
+   ACCESSIBLE, HIGH-CONTRAST CHECKBOXES
 --------------------------------------- */
 input[type=checkbox] {
     appearance: none;
-    width: 30px;
-    height: 30px;
-    background: #ffffff; /* Solid white background for high contrast */
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+    width: 26px;
+    height: 26px;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
     cursor: pointer;
     position: relative;
-    transition: 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Shadow to make it pop */
+    transition: all 0.2s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+input[type=checkbox]:hover {
+    border-color: #94a3b8;
 }
 
 input[type=checkbox]:checked {
-    background: #22c55e; /* Solid vibrant green */
-    border-color: #16a34a;
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+    background: #059669; /* Official solid green */
+    border-color: #059669;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
 }
 
 input[type=checkbox]:checked:after {
     content: "✓";
     position: absolute;
-    left: 8px;
-    top: 2px;
+    left: 5px;
+    top: 1px;
     color: white;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 /* Calendar Icon */
 .date-icon {
     display: none;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 18px;
     user-select: none;
-    transition: transform 0.2s, filter 0.2s;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    transition: transform 0.2s;
+    opacity: 0.8;
 }
 
 .date-icon:hover {
-    transform: scale(1.2) translateY(-2px);
+    transform: scale(1.15);
+    opacity: 1;
 }
 
 input[type=checkbox]:checked + .date-icon {
     display: inline-block;
-    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
+    0% { transform: scale(0.5); opacity: 0; }
     100% { transform: scale(1); opacity: 1; }
 }
 
 .status {
-    padding: 20px;
+    padding: 15px;
     text-align: center;
     font-weight: 600;
-    font-size: 16px;
-    color: #86efac;
-    height: 60px;
+    font-size: 15px;
+    color: #059669;
+    height: 55px;
 }
 
 /* --------------------------------------
-   SMOOTH POPUP MODAL CSS
+   PROFESSIONAL LIGHT MODAL
 --------------------------------------- */
 .popup-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(15, 23, 42, 0.5); /* Dark slate overlay */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: 0.4s ease;
+    transition: 0.3s ease;
     z-index: 1000;
 }
 
@@ -218,19 +228,17 @@ input[type=checkbox]:checked + .date-icon {
 }
 
 .popup-content {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
     padding: 40px;
-    border-radius: 24px;
+    border-radius: 16px;
     text-align: center;
-    color: white;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    transform: translateY(30px) scale(0.9);
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: #0f172a;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    transform: translateY(20px) scale(0.95);
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    max-width: 350px;
+    max-width: 400px;
     width: 90%;
 }
 
@@ -241,16 +249,16 @@ input[type=checkbox]:checked + .date-icon {
 .close-btn {
     position: absolute;
     top: 15px; right: 20px;
-    font-size: 28px;
+    font-size: 26px;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.6);
+    color: #94a3b8;
     transition: 0.2s;
 }
 
-.close-btn:hover { color: white; }
-.popup-icon { font-size: 50px; margin-bottom: 15px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2)); }
-.popup-content h3 { margin-bottom: 10px; font-weight: 600; font-size: 24px; letter-spacing: 1px;}
-.popup-content p { font-size: 16px; color: rgba(255, 255, 255, 0.9); line-height: 1.5; font-weight: 300;}
+.close-btn:hover { color: #0f172a; }
+.popup-icon { font-size: 45px; margin-bottom: 15px; }
+.popup-content h3 { margin-bottom: 12px; font-weight: 700; font-size: 22px; color: #1e3a8a;}
+.popup-content p { font-size: 15px; color: #475569; line-height: 1.6; font-weight: 400;}
 
 </style>
 </head>
@@ -259,16 +267,15 @@ input[type=checkbox]:checked + .date-icon {
 <div class="container">
     <div class="card">
         
-        <!-- NEW HEADER DESIGN -->
         <div class="header">
             <h1>Manjeshwar Grama Panchayat</h1>
-            <h2>TASK MANAGER</h2>
+            <h2>Task Management System</h2>
         </div>
         
         <table>
             <tr>
                 <th>TASK</th>
-                <th>DUE DATE</th> <!-- NEW COLUMN HEADER -->
+                <th>DUE DATE</th>
                 <th>JUNE</th>
                 <th>JULY</th>
                 <th>AUGUST</th>
@@ -281,40 +288,40 @@ input[type=checkbox]:checked + .date-icon {
             <!-- NPS ROW -->
             <tr>
                 <td>NPS</td>
-                <td><span class="due-badge">5th</span></td> <!-- DUE DATE -->
-                <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"><span class="date-icon" id="date_NPS_JUNE" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"><span class="date-icon" id="date_NPS_JULY" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"><span class="date-icon" id="date_NPS_AUGUST" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"><span class="date-icon" id="date_NPS_SEPTEMBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"><span class="date-icon" id="date_NPS_OCTOBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"><span class="date-icon" id="date_NPS_NOVEMBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"><span class="date-icon" id="date_NPS_DECEMBER" onclick="showDate(this)">📅</span></div></td>
+                <td><span class="due-badge">5th</span></td>
+                <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"><span class="date-icon" id="date_NPS_JUNE" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"><span class="date-icon" id="date_NPS_JULY" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"><span class="date-icon" id="date_NPS_AUGUST" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"><span class="date-icon" id="date_NPS_SEPTEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"><span class="date-icon" id="date_NPS_OCTOBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"><span class="date-icon" id="date_NPS_NOVEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"><span class="date-icon" id="date_NPS_DECEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
             </tr>
             
             <!-- MEDISEP ROW -->
             <tr>
                 <td>MEDISEP</td>
-                <td><span class="due-badge">5th</span></td> <!-- DUE DATE -->
-                <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"><span class="date-icon" id="date_MEDISEP_JUNE" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"><span class="date-icon" id="date_MEDISEP_JULY" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"><span class="date-icon" id="date_MEDISEP_AUGUST" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"><span class="date-icon" id="date_MEDISEP_SEPTEMBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"><span class="date-icon" id="date_MEDISEP_OCTOBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"><span class="date-icon" id="date_MEDISEP_NOVEMBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"><span class="date-icon" id="date_MEDISEP_DECEMBER" onclick="showDate(this)">📅</span></div></td>
+                <td><span class="due-badge">5th</span></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"><span class="date-icon" id="date_MEDISEP_JUNE" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"><span class="date-icon" id="date_MEDISEP_JULY" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"><span class="date-icon" id="date_MEDISEP_AUGUST" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"><span class="date-icon" id="date_MEDISEP_SEPTEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"><span class="date-icon" id="date_MEDISEP_OCTOBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"><span class="date-icon" id="date_MEDISEP_NOVEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"><span class="date-icon" id="date_MEDISEP_DECEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
             </tr>
             
             <!-- KPEPF ROW -->
             <tr>
                 <td>KPEPF</td>
-                <td><span class="due-badge">5th</span></td> <!-- DUE DATE -->
-                <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"><span class="date-icon" id="date_KPEPF_JUNE" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"><span class="date-icon" id="date_KPEPF_JULY" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"><span class="date-icon" id="date_KPEPF_AUGUST" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"><span class="date-icon" id="date_KPEPF_SEPTEMBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"><span class="date-icon" id="date_KPEPF_OCTOBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"><span class="date-icon" id="date_KPEPF_NOVEMBER" onclick="showDate(this)">📅</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"><span class="date-icon" id="date_KPEPF_DECEMBER" onclick="showDate(this)">📅</span></div></td>
+                <td><span class="due-badge">5th</span></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"><span class="date-icon" id="date_KPEPF_JUNE" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"><span class="date-icon" id="date_KPEPF_JULY" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"><span class="date-icon" id="date_KPEPF_AUGUST" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"><span class="date-icon" id="date_KPEPF_SEPTEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"><span class="date-icon" id="date_KPEPF_OCTOBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"><span class="date-icon" id="date_KPEPF_NOVEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
+                <td><div class="cell-wrapper"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"><span class="date-icon" id="date_KPEPF_DECEMBER" onclick="showDate(this)" title="View Date">📅</span></div></td>
             </tr>
         </table>
         
@@ -322,12 +329,12 @@ input[type=checkbox]:checked + .date-icon {
     </div>
 </div>
 
-<!-- Custom Glass Popup -->
+<!-- Professional Popup Modal -->
 <div id="datePopup" class="popup-overlay" onclick="closePopup(event)">
     <div class="popup-content">
         <span class="close-btn" onclick="closePopup()">&times;</span>
-        <div class="popup-icon">✨</div>
-        <h3 id="popupTitle">Task Completed</h3>
+        <div class="popup-icon">✅</div>
+        <h3 id="popupTitle">Task Verified</h3>
         <p id="popupMessage">Loading date...</p>
     </div>
 </div>
@@ -365,7 +372,7 @@ function saveTask(box, task, month){
     document.getElementById("sheetForm").submit();
 
     const statusDiv = document.getElementById("status");
-    statusDiv.innerHTML = "✓ Cloud Sync Successful";
+    statusDiv.innerHTML = "✓ Securely Synced to Database";
     statusDiv.style.opacity = 1;
     
     setTimeout(() => {
@@ -396,10 +403,10 @@ function showDate(icon) {
     
     if(savedDate) {
         title.innerText = "Task Verified";
-        message.innerHTML = `Completed securely on:<br><br><strong>${savedDate}</strong>`;
+        message.innerHTML = `This task was securely recorded on:<br><br><strong style="color:#0f172a; font-size: 16px;">${savedDate}</strong>`;
     } else {
-        title.innerText = "Syncing...";
-        message.innerText = "Data is still syncing with Google Sheets. Check back in a moment!";
+        title.innerText = "Syncing Record...";
+        message.innerText = "Data is still syncing with the server. Please check back in a moment.";
     }
     
     popup.classList.add("active");
