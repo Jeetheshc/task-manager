@@ -94,9 +94,11 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
             <tr>
                 <th>TASK</th><th>DUE DATE</th><th>JUNE</th><th>JULY</th><th>AUGUST</th><th>SEPTEMBER</th><th>OCTOBER</th><th>NOVEMBER</th><th>DECEMBER</th><th>REMARKS</th>
             </tr>
+            <!-- NPS ROW -->
             <tr>
                 <td>NPS</td>
-                <td><input type="number" id="due_NPS" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <!-- Updated default value to 15 -->
+                <td><input type="number" id="due_NPS" class="due-input" value="15" min="1" max="31" onchange="checkOverdue(false)"></td>
                 <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
                 <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
                 <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
@@ -111,9 +113,11 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
                     </div>
                 </td>
             </tr>
+            <!-- MEDISEP ROW -->
             <tr>
                 <td>MEDISEP</td>
-                <td><input type="number" id="due_MEDISEP" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <!-- Updated default value to 15 -->
+                <td><input type="number" id="due_MEDISEP" class="due-input" value="15" min="1" max="31" onchange="checkOverdue(false)"></td>
                 <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
                 <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
                 <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
@@ -128,9 +132,11 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
                     </div>
                 </td>
             </tr>
+            <!-- KPEPF ROW -->
             <tr>
                 <td>KPEPF</td>
-                <td><input type="number" id="due_KPEPF" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <!-- Updated default value to 10 -->
+                <td><input type="number" id="due_KPEPF" class="due-input" value="10" min="1" max="31" onchange="checkOverdue(false)"></td>
                 <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
                 <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
                 <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
@@ -159,7 +165,7 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 4
     </div>
 </div>
 
-<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbxG090XKS1Yi-hK9EvznrMf7ODnvNqv0NjHADJ35pG0gsHYNgF0UFbdCsh-IkNrEwMuCw/exec" method="POST" target="hiddenFrame">
+<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField" value="saveTask">
     <input type="hidden" name="task" id="task">
     <input type="hidden" name="month" id="month">
@@ -264,9 +270,6 @@ function submitRemark(task) {
     isSubmitting = true;
     setLoader("show", "Saving Remark...");
     document.getElementById("sheetForm").submit();
-    
-    // DELIBERATELY REMOVED: remarkInput.value = ""; 
-    // Now the text stays in the box after you hit submit!
 
     triggerPopup("📝", "Remark Logged", `Your note for ${task} was securely sent to the database.`, "#1e3a8a");
     setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
@@ -275,9 +278,7 @@ function submitRemark(task) {
 function handleIframeLoad() { if (isSubmitting) completeSync(); }
 function completeSync() { isSubmitting = false; setLoader("hide"); }
 
-// --- Upgraded Data Loading Logic ---
 function loadSavedData(data){
-    // 1. Process Tasks & Due Dates
     if(data.tasks) {
         data.tasks.forEach(row => {
             if(String(row.status).toUpperCase() == "TRUE"){
@@ -292,12 +293,11 @@ function loadSavedData(data){
         });
     }
 
-    // 2. Process Remarks (Inject them directly into the text boxes!)
     if(data.remarks) {
         for (const [taskName, remarkText] of Object.entries(data.remarks)) {
             const remarkInput = document.getElementById('remark_' + taskName);
             if (remarkInput) {
-                remarkInput.value = remarkText; // Fills the box automatically!
+                remarkInput.value = remarkText; 
             }
         }
     }
@@ -322,7 +322,7 @@ function closePopup(event) {
 }
 
 const script = document.createElement("script");
-script.src = "https://script.google.com/macros/s/AKfycbxG090XKS1Yi-hK9EvznrMf7ODnvNqv0NjHADJ35pG0gsHYNgF0UFbdCsh-IkNrEwMuCw/exec?callback=loadSavedData";
+script.src = "https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec?callback=loadSavedData";
 document.body.appendChild(script);
 </script>
 
