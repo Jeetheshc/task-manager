@@ -38,7 +38,6 @@ body {
 
 table { width: 100%; border-collapse: collapse; min-width: 1050px;}
 
-/* ---- REDUCED ROW HEIGHT CSS ---- */
 th { background: #f8fafc; color: #475569; padding: 12px 6px; font-weight: 600; font-size: 12px; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; }
 td { padding: 6px 4px; text-align: center; border-bottom: 1px solid #f1f5f9; color: #1e293b; transition: background 0.2s; }
 tr:nth-child(even) td { background-color: #fafaf9; }
@@ -97,6 +96,20 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
                 <th>TASK</th><th>DUE DATE</th><th>JUNE</th><th>JULY</th><th>AUGUST</th><th>SEPTEMBER</th><th>OCTOBER</th><th>NOVEMBER</th><th>DECEMBER</th><th>REMARKS</th>
             </tr>
             
+            <!-- SOOCHIKA 1 (1) -->
+            <tr>
+                <td>SOOCHIKA 1</td>
+                <td><input type="number" id="due_SOOCHIKA1" class="due-input" value="1" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA1_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA1_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA1_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA1_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA1_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA1_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA1_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA1" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA1')">Update</button></div></td>
+            </tr>
+
             <!-- DATABASE BACKUP (3) -->
             <tr>
                 <td>DATABASE BACKUP</td>
@@ -153,6 +166,20 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
                 <td><div class="remark-wrapper"><input type="text" id="remark_KPEPF" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('KPEPF')">Update</button></div></td>
             </tr>
 
+            <!-- SOOCHIKA 2 (10) -->
+            <tr>
+                <td>SOOCHIKA 2</td>
+                <td><input type="number" id="due_SOOCHIKA2" class="due-input" value="10" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA2_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA2_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA2_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA2_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA2_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA2_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA2_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA2" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA2')">Update</button></div></td>
+            </tr>
+
             <!-- NPS (15) -->
             <tr>
                 <td>NPS</td>
@@ -181,18 +208,18 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
                 <td><div class="remark-wrapper"><input type="text" id="remark_MEDISEP" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('MEDISEP')">Update</button></div></td>
             </tr>
 
-            <!-- SAND PERMIT (28) -->
+            <!-- SOOCHIKA 3 (20) -->
             <tr>
-                <td>SAND PERMIT</td>
-                <td><input type="number" id="due_SANDPERMIT" class="due-input" value="28" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_JUNE" type="checkbox" onchange="saveTask(this,'SANDPERMIT','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_JULY" type="checkbox" onchange="saveTask(this,'SANDPERMIT','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_AUGUST" type="checkbox" onchange="saveTask(this,'SANDPERMIT','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_OCTOBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_NOVEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_DECEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SANDPERMIT" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SANDPERMIT')">Update</button></div></td>
+                <td>SOOCHIKA 3</td>
+                <td><input type="number" id="due_SOOCHIKA3" class="due-input" value="20" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA3_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA3_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA3_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA3_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA3_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA3_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SOOCHIKA3_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA3" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA3')">Update</button></div></td>
             </tr>
 
             <!-- SALARY (25) -->
@@ -209,46 +236,18 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
                 <td><div class="remark-wrapper"><input type="text" id="remark_SALARY" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SALARY')">Update</button></div></td>
             </tr>
 
-            <!-- SOOCHIKA 1 (1) -->
+            <!-- SAND PERMIT (28) -->
             <tr>
-                <td>SOOCHIKA 1</td>
-                <td><input type="number" id="due_SOOCHIKA1" class="due-input" value="1" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA1" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA1')">Update</button></div></td>
-            </tr>
-
-            <!-- SOOCHIKA 2 (10) -->
-            <tr>
-                <td>SOOCHIKA 2</td>
-                <td><input type="number" id="due_SOOCHIKA2" class="due-input" value="10" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA2" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA2')">Update</button></div></td>
-            </tr>
-
-            <!-- SOOCHIKA 3 (20) -->
-            <tr>
-                <td>SOOCHIKA 3</td>
-                <td><input type="number" id="due_SOOCHIKA3" class="due-input" value="20" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA3" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA3')">Update</button></div></td>
+                <td>SAND PERMIT</td>
+                <td><input type="number" id="due_SANDPERMIT" class="due-input" value="28" min="1" max="31" onchange="checkOverdue(false)"></td>
+                <td><div class="cell-wrapper"><input id="SANDPERMIT_JUNE" type="checkbox" onchange="saveTask(this,'SANDPERMIT','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SANDPERMIT_JULY" type="checkbox" onchange="saveTask(this,'SANDPERMIT','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SANDPERMIT_AUGUST" type="checkbox" onchange="saveTask(this,'SANDPERMIT','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SANDPERMIT_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SANDPERMIT_OCTOBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SANDPERMIT_NOVEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="cell-wrapper"><input id="SANDPERMIT_DECEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
+                <td><div class="remark-wrapper"><input type="text" id="remark_SANDPERMIT" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SANDPERMIT')">Update</button></div></td>
             </tr>
 
         </table>
@@ -265,7 +264,7 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
     </div>
 </div>
 
-<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbx2Kc4TiteHHXt_ZKtYS-x_J8FnDzqRXQpywZh6z1N6LuAEP0ThilSjiRSXwTqtEI8Tsg/exec" method="POST" target="hiddenFrame">
+<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField" value="saveTask">
     <input type="hidden" name="task" id="task">
     <input type="hidden" name="month" id="month">
@@ -334,7 +333,6 @@ function saveTask(box, taskKey, month){
     const timestamp = new Date().toLocaleString();
     const dueValue = document.getElementById('due_' + taskKey).value;
 
-    // To display nicer names in the success popup, we add spaces back
     let displayName = taskKey.replace(/([A-Z])([0-9])/g, '$1 $2');
     if(displayName === "DATABASEBACKUP") displayName = "DATABASE BACKUP";
     if(displayName === "WARROOM") displayName = "WAR ROOM";
@@ -433,7 +431,7 @@ function closePopup(event) {
 }
 
 const script = document.createElement("script");
-script.src = "https://script.google.com/macros/s/AKfycbx2Kc4TiteHHXt_ZKtYS-x_J8FnDzqRXQpywZh6z1N6LuAEP0ThilSjiRSXwTqtEI8Tsg/exec?callback=loadSavedData";
+script.src = "https://script.google.com/macros/s/AKfycbwL6wpOUEIXVO_i_1EHdiT3f-8Fpn2R4mu5omqHCZYV4dpAewFPyWjOg2l7aSnAxvXuuw/exec?callback=loadSavedData";
 document.body.appendChild(script);
 </script>
 
