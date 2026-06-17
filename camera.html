@@ -86,8 +86,8 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
     </div>
 </div>
 
-<!-- REPLACE WITH YOUR NEW WEB APP URL -->
-<form id="sheetForm" action="YOUR_NEW_WEB_APP_URL_HERE" method="POST" target="hiddenFrame">
+<!-- Web App URL integrated here -->
+<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbxASpKQTkTOzAdH-GCPjQH4jh_ml23qVGReh1hj8hf4zNRpvdLvyVhcVDhzIcT7209nAA/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField">
     <input type="hidden" name="camera" id="cameraField">
     <input type="hidden" name="day" id="dayField">
@@ -213,9 +213,9 @@ function triggerPopup(icon, title, message, titleColor) {
 }
 function closePopup(event) { if (!event || event.target.id === 'unifiedPopup' || event.target.className === 'close-btn') { document.getElementById("unifiedPopup").classList.remove("active"); } }
 
-// REPLACE WITH YOUR NEW WEB APP URL
+// Web App URL integrated here for GET requests
 const script = document.createElement("script");
-script.src = "YOUR_NEW_WEB_APP_URL_HERE?callback=loadSavedData";
+script.src = "https://script.google.com/macros/s/AKfycbxASpKQTkTOzAdH-GCPjQH4jh_ml23qVGReh1hj8hf4zNRpvdLvyVhcVDhzIcT7209nAA/exec?callback=loadSavedData";
 document.body.appendChild(script);
 </script>
 
