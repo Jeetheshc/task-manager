@@ -86,7 +86,6 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
     </div>
 </div>
 
-<!-- Web App URL integrated here -->
 <form id="sheetForm" action="https://script.google.com/macros/s/AKfycbxASpKQTkTOzAdH-GCPjQH4jh_ml23qVGReh1hj8hf4zNRpvdLvyVhcVDhzIcT7209nAA/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField">
     <input type="hidden" name="camera" id="cameraField">
@@ -146,11 +145,8 @@ function saveCCTV(box, camera, day){
     document.getElementById("statusField").value = box.checked;
     document.getElementById("dateField").value = timestamp;
 
-    let displayCam = camera.replace("Camera", "Camera ");
-    if (box.checked) {
-        triggerPopup("📹", "Camera Logged", `${displayCam} on day ${day} marked as working.`, "#1e3a8a");
-    }
-
+    // POPUP REMOVED HERE: We now rely entirely on the loading banner for silent syncing.
+    
     isSubmitting = true;
     setLoader("show", "Syncing Record...");
     document.getElementById("sheetForm").submit();
