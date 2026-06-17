@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CCTV Manager - Manjeshwar Grama Panchayat</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background-color: #f1f5f9; background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 20px 20px; color: #0f172a; min-height: 100vh; padding: 50px 10px 30px; display: flex; justify-content: center; align-items: flex-start; }
+
+#topLoader { position: fixed; top: -60px; left: 50%; transform: translateX(-50%); background: #1e3a8a; color: #ffffff; padding: 10px 20px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3); transition: top 0.4s ease; z-index: 2000; }
+#topLoader.show { top: 0; }
+.spinner { width: 16px; height: 16px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.container { width: 100%; max-width: 1500px; margin: auto; }
+.card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 1px solid #ffffff; border-radius: 12px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08); overflow: hidden; }
+
+.header { background: linear-gradient(135deg, #1e3a8a, #f59e0b); padding: 25px 15px; text-align: center; color: #ffffff; border-bottom: 4px solid #b45309; position: relative; }
+.header-back-btn { position: absolute; left: 20px; top: 30px; color: white; text-decoration: none; font-weight: 600; font-size: 14px; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 8px; transition: 0.2s;}
+.header-back-btn:hover { background: rgba(0,0,0,0.4); }
+.header h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.header h2 { font-size: 16px; font-weight: 600; letter-spacing: 2px; color: #fef3c7; text-transform: uppercase; background: rgba(0,0,0,0.15); display: inline-block; padding: 4px 12px; border-radius: 20px;}
+
+.table-wrapper { overflow-x: auto; width: 100%; background: #fff;}
+table { width: max-content; border-collapse: separate; border-spacing: 0; min-width: 100%;}
+th, td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #f1f5f9; }
+th { background: #f8fafc; color: #475569; font-weight: 700; font-size: 13px; position: sticky; top: 0; z-index: 5;}
+tr:hover td { background: #fefce8; }
+
+/* Sticky Column Magic */
+.sticky-col { position: sticky; left: 0; background-color: #ffffff; z-index: 10; font-weight: 700; font-size: 14px; text-align: left; padding-left: 20px; border-right: 3px solid #cbd5e1; box-shadow: 2px 0 5px rgba(0,0,0,0.05);}
+tr:hover .sticky-col { background-color: #fefce8; }
+th.sticky-col { background-color: #f8fafc; z-index: 15; }
+
+.remark-wrapper { display: flex; gap: 4px; justify-content: center; align-items: center; padding: 0 10px;}
+.remark-input { width: 150px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; outline: none; transition: 0.2s;}
+.remark-input:focus { border-color: #f59e0b; }
+.remark-btn { background: #b45309; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s;}
+.remark-btn:hover { background: #92400e; }
+
+input[type=checkbox] { appearance: none; width: 22px; height: 22px; background: #ffffff; border: 2px solid #cbd5e1; border-radius: 5px; cursor: pointer; position: relative; transition: all 0.2s ease; margin: 0; }
+input[type=checkbox]:checked { background: #10b981; border-color: #10b981; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3); }
+input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3px; top: -1px; color: white; font-weight: bold; font-size: 15px; }
+
+.popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s ease; z-index: 1000; }
+.popup-overlay.active { opacity: 1; visibility: visible; }
+.popup-content { background: #ffffff; border: 1px solid #e2e8f0; padding: 30px; border-radius: 16px; text-align: center; color: #0f172a; box-shadow: 0 20px 50px rgba(0,0,0,0.15); transform: translateY(20px) scale(0.95); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; max-width: 380px; width: 90%; }
+.popup-overlay.active .popup-content { transform: translateY(0) scale(1); }
+.close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
+.close-btn:hover { color: #0f172a; }
+.popup-icon { font-size: 40px; margin-bottom: 10px; }
+.popup-content h3 { margin-bottom: 10px; font-weight: 700; font-size: 20px; }
+.popup-content p { font-size: 14px; color: #475569; line-height: 1.5; font-weight: 400; }
+</style>
+</head>
+<body>
+
+<div id="topLoader"><div class="spinner"></div><span id="loaderText">Loading System...</span></div>
+
+<div class="container">
+    <div class="card">
+        <div class="header">
+            <a href="index.html" class="header-back-btn">← Home</a>
+            <h1>CCTV Manager</h1>
+            <h2 id="monthTitle">Loading Month...</h2>
+        </div>
+        
+        <div class="table-wrapper">
+            <table id="cctvTable">
+                <thead id="tableHead"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="unifiedPopup" class="popup-overlay" onclick="closePopup(event)">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <div class="popup-icon" id="popupIcon">ℹ️</div>
+        <h3 id="popupTitle">Notification</h3>
+        <p id="popupMessage">Message</p>
+    </div>
+</div>
+
+<!-- REPLACE WITH YOUR NEW WEB APP URL -->
+<form id="sheetForm" action="YOUR_NEW_WEB_APP_URL_HERE" method="POST" target="hiddenFrame">
+    <input type="hidden" name="action" id="actionField">
+    <input type="hidden" name="camera" id="cameraField">
+    <input type="hidden" name="day" id="dayField">
+    <input type="hidden" name="status" id="statusField">
+    <input type="hidden" name="date" id="dateField">
+    <input type="hidden" name="remark" id="remarkField"> 
+</form>
+
+<iframe name="hiddenFrame" id="hiddenFrame" style="display:none"></iframe>
+
+<script>
+document.getElementById('hiddenFrame').addEventListener('load', handleIframeLoad);
+
+// --- 1. Generate Dynamic Interface ---
+function buildInterface() {
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentMonth = months[new Date().getMonth()];
+    const currentYear = new Date().getFullYear();
+    document.getElementById("monthTitle").innerText = `${currentMonth} ${currentYear}`;
+
+    let headHTML = '<tr><th class="sticky-col">CAMERA</th>';
+    for(let i=1; i<=31; i++) { headHTML += `<th>${i}</th>`; }
+    headHTML += '<th>REMARKS</th></tr>';
+    document.getElementById("tableHead").innerHTML = headHTML;
+
+    let bodyHTML = '';
+    for(let c=1; c<=5; c++) {
+        let camID = `Camera${c}`;
+        bodyHTML += `<tr><td class="sticky-col">Camera ${c}</td>`;
+        for(let d=1; d<=31; d++) {
+            bodyHTML += `<td><input type="checkbox" id="${camID}_${d}" onchange="saveCCTV(this, '${camID}', ${d})"></td>`;
+        }
+        bodyHTML += `<td><div class="remark-wrapper"><input type="text" id="remark_${camID}" class="remark-input" placeholder="Type status..."><button class="remark-btn" onclick="submitRemark('${camID}')">Update</button></div></td></tr>`;
+    }
+    document.getElementById("tableBody").innerHTML = bodyHTML;
+}
+
+buildInterface(); // Run immediately
+
+function setLoader(state, text = "") {
+    const loader = document.getElementById("topLoader");
+    const loaderText = document.getElementById("loaderText");
+    if (state === "show") { loaderText.innerText = text; loader.classList.add("show"); } 
+    else { loader.classList.remove("show"); }
+}
+setLoader("show", "Connecting to Database...");
+
+let isSubmitting = false; 
+
+function saveCCTV(box, camera, day){
+    const timestamp = new Date().toLocaleString();
+
+    document.getElementById("actionField").value = "saveCCTV"; 
+    document.getElementById("cameraField").value = camera;
+    document.getElementById("dayField").value = day;
+    document.getElementById("statusField").value = box.checked;
+    document.getElementById("dateField").value = timestamp;
+
+    let displayCam = camera.replace("Camera", "Camera ");
+    if (box.checked) {
+        triggerPopup("📹", "Camera Logged", `${displayCam} on day ${day} marked as working.`, "#1e3a8a");
+    }
+
+    isSubmitting = true;
+    setLoader("show", "Syncing Record...");
+    document.getElementById("sheetForm").submit();
+    setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
+}
+
+function submitRemark(camera) {
+    const remarkInput = document.getElementById('remark_' + camera);
+    const remarkText = remarkInput.value.trim();
+
+    if (!remarkText) {
+        triggerPopup("❌", "Empty Remark", "Please type a note before updating.", "#b45309");
+        return;
+    }
+
+    document.getElementById("actionField").value = "saveCCTVRemark"; 
+    document.getElementById("cameraField").value = camera;
+    document.getElementById("remarkField").value = remarkText;
+
+    isSubmitting = true;
+    setLoader("show", "Saving Remark...");
+    document.getElementById("sheetForm").submit();
+
+    let displayCam = camera.replace("Camera", "Camera ");
+    triggerPopup("📝", "Remark Logged", `Security note for ${displayCam} was securely saved.`, "#1e3a8a");
+    setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
+}
+
+function handleIframeLoad() { if (isSubmitting) completeSync(); }
+function completeSync() { isSubmitting = false; setLoader("hide"); }
+
+function loadSavedData(data){
+    // Load Checkboxes
+    if(data.cctv) {
+        data.cctv.forEach(row => {
+            if(String(row.status).toUpperCase() == "TRUE"){
+                const id = row.camera + "_" + row.day;
+                const cb = document.getElementById(id);
+                if(cb) cb.checked = true;
+            }
+        });
+    }
+    // Load Remarks
+    if(data.cctvRemarks) {
+        for (const [camName, remarkText] of Object.entries(data.cctvRemarks)) {
+            const remarkInput = document.getElementById('remark_' + camName);
+            if (remarkInput) remarkInput.value = remarkText; 
+        }
+    }
+    setLoader("hide");
+}
+
+function triggerPopup(icon, title, message, titleColor) {
+    document.getElementById("popupIcon").innerText = icon;
+    const titleEl = document.getElementById("popupTitle");
+    titleEl.innerText = title;
+    titleEl.style.color = titleColor;
+    document.getElementById("popupMessage").innerHTML = message;
+    document.getElementById("unifiedPopup").classList.add("active");
+}
+function closePopup(event) { if (!event || event.target.id === 'unifiedPopup' || event.target.className === 'close-btn') { document.getElementById("unifiedPopup").classList.remove("active"); } }
+
+// REPLACE WITH YOUR NEW WEB APP URL
+const script = document.createElement("script");
+script.src = "YOUR_NEW_WEB_APP_URL_HERE?callback=loadSavedData";
+document.body.appendChild(script);
+</script>
+
+</body>
+</html>
