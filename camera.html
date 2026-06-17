@@ -8,64 +8,68 @@
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-body { background-color: #f1f5f9; background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 20px 20px; color: #0f172a; min-height: 100vh; padding: 50px 10px 30px; display: flex; justify-content: center; align-items: flex-start; }
+body { background-color: #f1f5f9; background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 20px 20px; color: #0f172a; min-height: 100vh; padding: 30px 10px; display: flex; justify-content: center; align-items: flex-start; }
 
-#topLoader { position: fixed; top: -60px; left: 50%; transform: translateX(-50%); background: #1e3a8a; color: #ffffff; padding: 10px 20px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3); transition: top 0.4s ease; z-index: 2000; }
+#topLoader { position: fixed; top: -60px; left: 50%; transform: translateX(-50%); background: #1e3a8a; color: #ffffff; padding: 8px 16px; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(30, 58, 138, 0.3); transition: top 0.4s ease; z-index: 2000; }
 #topLoader.show { top: 0; }
-.spinner { width: 16px; height: 16px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
+.spinner { width: 14px; height: 14px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-.container { width: 100%; max-width: 1500px; margin: auto; }
-.card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 1px solid #ffffff; border-radius: 12px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08); overflow: hidden; }
+.container { width: 100%; max-width: 1550px; margin: auto; }
+.card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08); overflow: hidden; }
 
-.header { background: linear-gradient(135deg, #1e3a8a, #f59e0b); padding: 25px 15px; text-align: center; color: #ffffff; border-bottom: 4px solid #b45309; position: relative; }
-.header-back-btn { position: absolute; left: 20px; top: 30px; color: white; text-decoration: none; font-weight: 600; font-size: 14px; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 8px; transition: 0.2s;}
+.header { background: linear-gradient(135deg, #1e3a8a, #f59e0b); padding: 20px 15px; text-align: center; color: #ffffff; border-bottom: 4px solid #b45309; position: relative; }
+.header-back-btn { position: absolute; left: 15px; top: 20px; color: white; text-decoration: none; font-weight: 600; font-size: 13px; background: rgba(0,0,0,0.2); padding: 6px 12px; border-radius: 6px; transition: 0.2s;}
 .header-back-btn:hover { background: rgba(0,0,0,0.4); }
-.header h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-.header h2 { font-size: 16px; font-weight: 600; letter-spacing: 2px; color: #fef3c7; text-transform: uppercase; background: rgba(0,0,0,0.15); display: inline-block; padding: 4px 12px; border-radius: 20px;}
+.header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.header h2 { font-size: 14px; font-weight: 600; letter-spacing: 1px; color: #fef3c7; text-transform: uppercase; background: rgba(0,0,0,0.15); display: inline-block; padding: 4px 10px; border-radius: 20px;}
 
-/* Scrollable Table Container */
-.table-wrapper { overflow: auto; width: 100%; max-height: 70vh; background: #fff;}
+/* ---- MINIMAL ROW HEIGHT CSS ---- */
+.table-wrapper { overflow: auto; width: 100%; max-height: 75vh;}
 table { width: max-content; border-collapse: separate; border-spacing: 0; min-width: 100%;}
-th, td { padding: 8px 4px; text-align: center; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #f1f5f9; font-size: 13px;}
+th, td { padding: 4px 2px; text-align: center; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #f1f5f9; font-size: 12px;}
 
-/* Top Row Sticky */
-th { background: #f8fafc; color: #475569; font-weight: 700; font-size: 12px; position: sticky; top: 0; z-index: 5; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1);}
+th { background: #f8fafc; color: #475569; font-weight: 700; font-size: 11px; position: sticky; top: 0; z-index: 5; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1);}
 
-/* Multi-Column Sticky Magic (Left 4 Columns) */
-.col-1 { position: sticky; left: 0; width: 45px; min-width: 45px; background: #ffffff; z-index: 10; font-weight: 600;}
-.col-2 { position: sticky; left: 45px; width: 100px; min-width: 100px; background: #ffffff; z-index: 10; font-weight: 600; color: #475569;}
-.col-3 { position: sticky; left: 145px; width: 85px; min-width: 85px; background: #ffffff; z-index: 10; font-weight: 700; color: #1e3a8a;}
-.col-4 { position: sticky; left: 230px; width: 230px; min-width: 230px; background: #ffffff; z-index: 10; border-right: 3px solid #cbd5e1; text-align: left; padding-left: 10px; font-weight: 500;}
+.col-1 { position: sticky; left: 0; width: 40px; min-width: 40px; background: #ffffff; z-index: 10; font-weight: 600;}
+.col-2 { position: sticky; left: 40px; width: 90px; min-width: 90px; background: #ffffff; z-index: 10; font-weight: 600; color: #475569;}
+.col-3 { position: sticky; left: 130px; width: 80px; min-width: 80px; background: #ffffff; z-index: 10; font-weight: 700; color: #1e3a8a;}
+.col-4 { position: sticky; left: 210px; width: 200px; min-width: 200px; background: #ffffff; z-index: 10; border-right: 3px solid #cbd5e1; text-align: left; padding-left: 8px; font-weight: 500;}
 
-/* Hover States for Sticky Columns */
 tr:hover td { background-color: #fefce8; }
 tr:hover .col-1, tr:hover .col-2, tr:hover .col-3, tr:hover .col-4 { background-color: #fefce8; }
-
-/* Corner Elements (Must stay above both X and Y scrolling) */
 th.col-1, th.col-2, th.col-3, th.col-4 { top: 0; z-index: 20; background: #f1f5f9; text-transform: uppercase;}
 
-/* Form Elements */
-.remark-wrapper { display: flex; gap: 4px; justify-content: center; align-items: center; padding: 0 10px;}
-.remark-input { width: 150px; padding: 6px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; outline: none; transition: 0.2s;}
+/* Compact Buttons & Inputs */
+.remark-wrapper { display: flex; gap: 4px; justify-content: center; align-items: center; padding: 0 5px;}
+.remark-input { width: 120px; padding: 4px 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; outline: none;}
 .remark-input:focus { border-color: #f59e0b; }
-.remark-btn { background: #b45309; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s;}
+.remark-btn { background: #b45309; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; cursor: pointer;}
 .remark-btn:hover { background: #92400e; }
 
-input[type=checkbox] { appearance: none; width: 22px; height: 22px; background: #ffffff; border: 2px solid #cbd5e1; border-radius: 5px; cursor: pointer; position: relative; transition: all 0.2s ease; margin: 0; }
-input[type=checkbox]:checked { background: #10b981; border-color: #10b981; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3); }
-input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3px; top: -1px; color: white; font-weight: bold; font-size: 15px; }
+.history-btn { background: #475569; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; cursor: pointer;}
+.history-btn:hover { background: #334155; }
 
-/* Notification Popup */
+input[type=checkbox] { appearance: none; width: 16px; height: 16px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 3px; cursor: pointer; position: relative; margin: 0; display: block; margin-left: auto; margin-right: auto;}
+input[type=checkbox]:checked { background: #10b981; border-color: #10b981; }
+input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 2px; top: -3px; color: white; font-weight: bold; font-size: 13px; }
+
+/* Popup UI for History */
 .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s ease; z-index: 1000; }
 .popup-overlay.active { opacity: 1; visibility: visible; }
-.popup-content { background: #ffffff; border: 1px solid #e2e8f0; padding: 30px; border-radius: 16px; text-align: center; color: #0f172a; box-shadow: 0 20px 50px rgba(0,0,0,0.15); transform: translateY(20px) scale(0.95); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; max-width: 380px; width: 90%; }
+.popup-content { background: #ffffff; border: 1px solid #e2e8f0; padding: 30px; border-radius: 16px; text-align: center; color: #0f172a; box-shadow: 0 20px 50px rgba(0,0,0,0.15); transform: translateY(20px) scale(0.95); transition: 0.3s ease; position: relative; max-width: 500px; width: 95%; }
 .popup-overlay.active .popup-content { transform: translateY(0) scale(1); }
 .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
 .close-btn:hover { color: #0f172a; }
-.popup-icon { font-size: 40px; margin-bottom: 10px; }
-.popup-content h3 { margin-bottom: 10px; font-weight: 700; font-size: 20px; }
-.popup-content p { font-size: 14px; color: #475569; line-height: 1.5; font-weight: 400; }
+.popup-icon { font-size: 35px; margin-bottom: 10px; }
+.popup-content h3 { margin-bottom: 15px; font-weight: 700; font-size: 18px; color: #1e3a8a;}
+.popup-content p { font-size: 14px; color: #475569; margin: 0;}
+
+/* History Table inside Modal */
+.history-table-container { max-height: 250px; overflow-y: auto; text-align: left; border: 1px solid #e2e8f0; border-radius: 8px;}
+.history-table { width: 100%; border-collapse: collapse; }
+.history-table th { background: #f8fafc; padding: 8px; border-bottom: 2px solid #cbd5e1; position: sticky; top: 0;}
+.history-table td { padding: 8px; border-bottom: 1px solid #e2e8f0; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -94,11 +98,10 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
         <span class="close-btn" onclick="closePopup()">&times;</span>
         <div class="popup-icon" id="popupIcon">ℹ️</div>
         <h3 id="popupTitle">Notification</h3>
-        <p id="popupMessage">Message</p>
+        <div id="popupMessage"></div>
     </div>
 </div>
 
-<!-- Web App URL integrated here -->
 <form id="sheetForm" action="https://script.google.com/macros/s/AKfycbxASpKQTkTOzAdH-GCPjQH4jh_ml23qVGReh1hj8hf4zNRpvdLvyVhcVDhzIcT7209nAA/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField">
     <input type="hidden" name="camera" id="cameraField">
@@ -113,7 +116,9 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
 <script>
 document.getElementById('hiddenFrame').addEventListener('load', handleIframeLoad);
 
-// --- Complete Asset Database from Image ---
+// Global variable to hold remark history
+let globalRemarksHistory = {};
+
 const assets = [
     { sl: 1, type: "CC CAMERA", id: "MGPCC1", loc: "Durgippalla" },
     { sl: 2, type: "CC CAMERA", id: "MGPCC2", loc: "Bangra Manjeshwar Bridge" },
@@ -139,24 +144,18 @@ const assets = [
     { sl: 22, type: "CC CAMERA", id: "MGPCC20", loc: "Manjeshwar GP Office" }
 ];
 
-// --- 1. Generate Dynamic Interface ---
 function buildInterface() {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const currentMonth = months[new Date().getMonth()];
     const currentYear = new Date().getFullYear();
     document.getElementById("monthTitle").innerText = `${currentMonth} ${currentYear}`;
 
-    // Table Header
     let headHTML = '<tr>';
-    headHTML += '<th class="col-1">SL NO</th>';
-    headHTML += '<th class="col-2">ASSET TYPE</th>';
-    headHTML += '<th class="col-3">ASSET ID</th>';
-    headHTML += '<th class="col-4">INSTALLATION</th>';
+    headHTML += '<th class="col-1">SL</th><th class="col-2">TYPE</th><th class="col-3">ID</th><th class="col-4">INSTALLATION</th>';
     for(let i=1; i<=31; i++) { headHTML += `<th>${i}</th>`; }
     headHTML += '<th>REMARKS</th></tr>';
     document.getElementById("tableHead").innerHTML = headHTML;
 
-    // Table Body
     let bodyHTML = '';
     assets.forEach(asset => {
         bodyHTML += `<tr>`;
@@ -166,16 +165,21 @@ function buildInterface() {
         bodyHTML += `<td class="col-4">${asset.loc}</td>`;
         
         for(let d=1; d<=31; d++) {
-            // Using asset.id (e.g., MGPCC1) to save securely to the database
-            bodyHTML += `<td><input type="checkbox" id="${asset.id}_${d}" onchange="saveCCTV(this, '${asset.id}', ${d})"></td>`;
+            // Passing 'asset.loc' as the unique identifier to store the Installation location
+            bodyHTML += `<td><input type="checkbox" id="${asset.id}_${d}" onchange="saveCCTV(this, '${asset.loc}', ${d})"></td>`;
         }
-        bodyHTML += `<td><div class="remark-wrapper"><input type="text" id="remark_${asset.id}" class="remark-input" placeholder="Type status..."><button class="remark-btn" onclick="submitRemark('${asset.id}')">Update</button></div></td></tr>`;
+        
+        bodyHTML += `<td><div class="remark-wrapper">
+            <input type="text" id="remark_${asset.id}" class="remark-input" placeholder="Note...">
+            <button class="remark-btn" onclick="submitRemark('${asset.loc}', '${asset.id}')">Update</button>
+            <button class="history-btn" onclick="showHistory('${asset.loc}')">🕒 History</button>
+        </div></td></tr>`;
     });
     
     document.getElementById("tableBody").innerHTML = bodyHTML;
 }
 
-buildInterface(); // Run immediately
+buildInterface();
 
 function setLoader(state, text = "") {
     const loader = document.getElementById("topLoader");
@@ -187,11 +191,10 @@ setLoader("show", "Connecting to Database...");
 
 let isSubmitting = false; 
 
-function saveCCTV(box, assetID, day){
+function saveCCTV(box, locationName, day){
     const timestamp = new Date().toLocaleString();
-
     document.getElementById("actionField").value = "saveCCTV"; 
-    document.getElementById("cameraField").value = assetID;
+    document.getElementById("cameraField").value = locationName; // Saves "Durgippalla"
     document.getElementById("dayField").value = day;
     document.getElementById("statusField").value = box.checked;
     document.getElementById("dateField").value = timestamp;
@@ -202,63 +205,99 @@ function saveCCTV(box, assetID, day){
     setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
 }
 
-function submitRemark(assetID) {
-    const remarkInput = document.getElementById('remark_' + assetID);
+function submitRemark(locationName, htmlId) {
+    const remarkInput = document.getElementById('remark_' + htmlId);
     const remarkText = remarkInput.value.trim();
 
     if (!remarkText) {
-        triggerPopup("❌", "Empty Remark", "Please type a note before updating.", "#b45309");
+        triggerPopup("❌", "Empty Remark", "<p>Please type a note before updating.</p>", "#b45309");
         return;
     }
 
     document.getElementById("actionField").value = "saveCCTVRemark"; 
-    document.getElementById("cameraField").value = assetID;
+    document.getElementById("cameraField").value = locationName; // Saves "Durgippalla"
     document.getElementById("remarkField").value = remarkText;
 
     isSubmitting = true;
     setLoader("show", "Saving Remark...");
     document.getElementById("sheetForm").submit();
 
-    triggerPopup("📝", "Remark Logged", `Security note for ${assetID} was securely saved.`, "#1e3a8a");
+    triggerPopup("📝", "Remark Logged", `<p>Security note for <strong>${locationName}</strong> was saved to the history log.</p>`, "#1e3a8a");
     setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
+}
+
+function showHistory(locationName) {
+    let html = `<div class="history-table-container"><table class="history-table">
+                <tr><th>Date Recorded</th><th>Remark</th></tr>`;
+    
+    if(globalRemarksHistory[locationName] && globalRemarksHistory[locationName].length > 0) {
+        // Reverse array to show newest first
+        let history = [...globalRemarksHistory[locationName]].reverse();
+        history.forEach(item => {
+            html += `<tr><td style="white-space: nowrap; font-weight: 500; color: #64748b;">${item.date}</td>
+                         <td style="color: #0f172a;">${item.remark}</td></tr>`;
+        });
+    } else {
+        html += `<tr><td colspan="2" style="text-align: center; color: #94a3b8; padding: 20px;">No historical records found for this location.</td></tr>`;
+    }
+    html += `</table></div>`;
+
+    triggerPopup("📜", `History: ${locationName}`, html, "#1e3a8a");
 }
 
 function handleIframeLoad() { if (isSubmitting) completeSync(); }
 function completeSync() { isSubmitting = false; setLoader("hide"); }
 
 function loadSavedData(data){
-    // Load Checkboxes
+    const currentMonth = new Date().getMonth();
+    const currentYear = new Date().getFullYear();
+
+    // Load Checkboxes ONLY if they match the current real-world month & year!
     if(data.cctv) {
         data.cctv.forEach(row => {
             if(String(row.status).toUpperCase() == "TRUE"){
-                // matches exact assetID (e.g. MGPCC1_5)
-                const id = row.camera + "_" + row.day;
-                const cb = document.getElementById(id);
-                if(cb) cb.checked = true;
+                // Auto-Erase Magic: Compare record timestamp to current date
+                const recordDate = new Date(row.date);
+                if(recordDate.getMonth() === currentMonth && recordDate.getFullYear() === currentYear) {
+                    
+                    // Match location string back to HTML ID
+                    const asset = assets.find(a => a.loc === row.camera);
+                    if(asset) {
+                        const id = asset.id + "_" + row.day;
+                        const cb = document.getElementById(id);
+                        if(cb) cb.checked = true;
+                    }
+                }
             }
         });
     }
+    
     // Load Remarks
     if(data.cctvRemarks) {
-        for (const [camName, remarkText] of Object.entries(data.cctvRemarks)) {
-            const remarkInput = document.getElementById('remark_' + camName);
-            if (remarkInput) remarkInput.value = remarkText; 
+        globalRemarksHistory = data.cctvRemarks; // Save locally for the popup button
+        
+        for (const [locationName, remarksArray] of Object.entries(data.cctvRemarks)) {
+            const asset = assets.find(a => a.loc === locationName);
+            if (asset && remarksArray.length > 0) {
+                const remarkInput = document.getElementById('remark_' + asset.id);
+                // Place the most recent remark into the text box automatically
+                if (remarkInput) remarkInput.value = remarksArray[remarksArray.length - 1].remark; 
+            }
         }
     }
     setLoader("hide");
 }
 
-function triggerPopup(icon, title, message, titleColor) {
+function triggerPopup(icon, title, messageHTML, titleColor) {
     document.getElementById("popupIcon").innerText = icon;
     const titleEl = document.getElementById("popupTitle");
     titleEl.innerText = title;
     titleEl.style.color = titleColor;
-    document.getElementById("popupMessage").innerHTML = message;
+    document.getElementById("popupMessage").innerHTML = messageHTML;
     document.getElementById("unifiedPopup").classList.add("active");
 }
 function closePopup(event) { if (!event || event.target.id === 'unifiedPopup' || event.target.className === 'close-btn') { document.getElementById("unifiedPopup").classList.remove("active"); } }
 
-// Web App URL integrated here for GET requests
 const script = document.createElement("script");
 script.src = "https://script.google.com/macros/s/AKfycbxASpKQTkTOzAdH-GCPjQH4jh_ml23qVGReh1hj8hf4zNRpvdLvyVhcVDhzIcT7209nAA/exec?callback=loadSavedData";
 document.body.appendChild(script);
