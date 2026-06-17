@@ -1,439 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Task Manager - Manjeshwar Grama Panchayat</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-
-body {
-    background-color: #f1f5f9;
-    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-    background-size: 20px 20px;
-    color: #0f172a; min-height: 100vh; padding: 50px 10px 30px; 
-    display: flex; justify-content: center; align-items: center;
-}
-
-#topLoader {
-    position: fixed; top: -60px; left: 50%; transform: translateX(-50%);
-    background: #1e3a8a; color: #ffffff; padding: 10px 20px;
-    border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
-    font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px;
-    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3); transition: top 0.4s ease; z-index: 2000;
-}
-#topLoader.show { top: 0; }
-.spinner { width: 16px; height: 16px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #ffffff; border-radius: 50%; animation: spin 1s linear infinite; }
-@keyframes spin { 100% { transform: rotate(360deg); } }
-
-.container { width: 100%; max-width: 1400px; margin: auto; }
-.card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 1px solid #ffffff; border-radius: 12px; box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08); overflow: hidden; overflow-x: auto; }
-
-.header { background: linear-gradient(135deg, #1e3a8a, #2563eb); padding: 25px 15px; text-align: center; color: #ffffff; border-bottom: 4px solid #10b981; }
-.header h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-.header h2 { font-size: 14px; font-weight: 500; letter-spacing: 2px; color: #bfdbfe; text-transform: uppercase; }
-
-table { width: 100%; border-collapse: collapse; min-width: 1050px;}
-
-th { background: #f8fafc; color: #475569; padding: 12px 6px; font-weight: 600; font-size: 12px; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; }
-td { padding: 6px 4px; text-align: center; border-bottom: 1px solid #f1f5f9; color: #1e293b; transition: background 0.2s; }
-tr:nth-child(even) td { background-color: #fafaf9; }
-tr:hover td { background: #f0f9ff; }
-td:first-child { text-align: left; font-weight: 600; font-size: 13px; padding-left: 20px; color: #0f172a; white-space: nowrap; }
-
-.due-input {
-    width: 40px; padding: 4px; border-radius: 6px; border: 2px solid #cbd5e1;
-    text-align: center; font-weight: 700; font-size: 13px; color: #b45309; background: #fffbeb;
-    outline: none; transition: 0.2s;
-}
-.due-input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
-
-.remark-wrapper { display: flex; gap: 4px; justify-content: center; align-items: center; padding-right: 15px;}
-.remark-input { width: 120px; padding: 6px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; outline: none; transition: 0.2s;}
-.remark-input:focus { border-color: #2563eb; }
-.remark-btn { background: #1e3a8a; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s;}
-.remark-btn:hover { background: #1e40af; }
-
-.cell-wrapper { display: inline-flex; align-items: center; justify-content: center; gap: 6px; position: relative; }
-
-input[type=checkbox] {
-    appearance: none; width: 22px; height: 22px; background: #ffffff; border: 2px solid #cbd5e1;
-    border-radius: 5px; cursor: pointer; position: relative; transition: all 0.2s ease; margin: 0;
-}
-input[type=checkbox]:checked { background: #059669; border-color: #059669; box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3); }
-input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3px; top: -1px; color: white; font-weight: bold; font-size: 15px; }
-
-.warning-icon { display: none; cursor: help; font-size: 16px; animation: pulse 1.5s infinite; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
-.overdue .warning-icon { display: inline-block; }
-
-.popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s ease; z-index: 1000; }
-.popup-overlay.active { opacity: 1; visibility: visible; }
-.popup-content { background: #ffffff; border: 1px solid #e2e8f0; padding: 30px; border-radius: 16px; text-align: center; color: #0f172a; box-shadow: 0 20px 50px rgba(0,0,0,0.15); transform: translateY(20px) scale(0.95); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; max-width: 380px; width: 90%; }
-.popup-overlay.active .popup-content { transform: translateY(0) scale(1); }
-.close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
-.close-btn:hover { color: #0f172a; }
-.popup-icon { font-size: 40px; margin-bottom: 10px; }
-.popup-content h3 { margin-bottom: 10px; font-weight: 700; font-size: 20px; }
-.popup-content p { font-size: 14px; color: #475569; line-height: 1.5; font-weight: 400; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Manjeshwar Grama Panchayath</title>
+    <!-- Using Tailwind CSS for quick, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen">
 
-<div id="topLoader"><div class="spinner"></div><span id="loaderText">Loading Database...</span></div>
+    <!-- Top Navigation / Task Bar Link -->
+    <nav class="bg-blue-800 text-white p-4 shadow-md flex justify-between items-center">
+        <div class="text-xl font-bold tracking-wide">Panchayath Portal</div>
+        <ul class="flex space-x-6 font-medium">
+            <li><a href="#" class="hover:text-blue-200 transition">Dashboard</a></li>
+            <!-- Link to the official website -->
+            <li><a href="https://manjeshwar.lsgkerala.gov.in" target="_blank" class="bg-white text-blue-800 px-4 py-2 rounded shadow hover:bg-gray-100 transition">Official Website</a></li>
+        </ul>
+    </nav>
 
-<div class="container">
-    <div class="card">
-        <div class="header">
-            <h1>Manjeshwar Grama Panchayat</h1>
-            <h2>Task Management System 1</h2>
-        </div>
-        <table>
-            <tr>
-                <th>TASK</th><th>DUE DATE</th><th>JUNE</th><th>JULY</th><th>AUGUST</th><th>SEPTEMBER</th><th>OCTOBER</th><th>NOVEMBER</th><th>DECEMBER</th><th>REMARKS</th>
-            </tr>
-            
-            <!-- SOOCHIKA 1 (1) -->
-            <tr>
-                <td>SOOCHIKA 1</td>
-                <td><input type="number" id="due_SOOCHIKA1" class="due-input" value="1" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA1_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA1','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA1" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA1')">Update</button></div></td>
-            </tr>
-
-            <!-- DATABASE BACKUP (3) -->
-            <tr>
-                <td>DATABASE BACKUP</td>
-                <td><input type="number" id="due_DATABASEBACKUP" class="due-input" value="3" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="DATABASEBACKUP_JUNE" type="checkbox" onchange="saveTask(this,'DATABASEBACKUP','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="DATABASEBACKUP_JULY" type="checkbox" onchange="saveTask(this,'DATABASEBACKUP','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="DATABASEBACKUP_AUGUST" type="checkbox" onchange="saveTask(this,'DATABASEBACKUP','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="DATABASEBACKUP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'DATABASEBACKUP','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="DATABASEBACKUP_OCTOBER" type="checkbox" onchange="saveTask(this,'DATABASEBACKUP','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="DATABASEBACKUP_NOVEMBER" type="checkbox" onchange="saveTask(this,'DATABASEBACKUP','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="DATABASEBACKUP_DECEMBER" type="checkbox" onchange="saveTask(this,'DATABASEBACKUP','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_DATABASEBACKUP" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('DATABASEBACKUP')">Update</button></div></td>
-            </tr>
-
-            <!-- NGT (5) -->
-            <tr>
-                <td>NGT</td>
-                <td><input type="number" id="due_NGT" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="NGT_JUNE" type="checkbox" onchange="saveTask(this,'NGT','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NGT_JULY" type="checkbox" onchange="saveTask(this,'NGT','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NGT_AUGUST" type="checkbox" onchange="saveTask(this,'NGT','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NGT_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NGT','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NGT_OCTOBER" type="checkbox" onchange="saveTask(this,'NGT','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NGT_NOVEMBER" type="checkbox" onchange="saveTask(this,'NGT','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NGT_DECEMBER" type="checkbox" onchange="saveTask(this,'NGT','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_NGT" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('NGT')">Update</button></div></td>
-            </tr>
-
-            <!-- WAR ROOM (5) -->
-            <tr>
-                <td>WAR ROOM</td>
-                <td><input type="number" id="due_WARROOM" class="due-input" value="5" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="WARROOM_JUNE" type="checkbox" onchange="saveTask(this,'WARROOM','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="WARROOM_JULY" type="checkbox" onchange="saveTask(this,'WARROOM','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="WARROOM_AUGUST" type="checkbox" onchange="saveTask(this,'WARROOM','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="WARROOM_SEPTEMBER" type="checkbox" onchange="saveTask(this,'WARROOM','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="WARROOM_OCTOBER" type="checkbox" onchange="saveTask(this,'WARROOM','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="WARROOM_NOVEMBER" type="checkbox" onchange="saveTask(this,'WARROOM','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="WARROOM_DECEMBER" type="checkbox" onchange="saveTask(this,'WARROOM','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_WARROOM" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('WARROOM')">Update</button></div></td>
-            </tr>
-
-            <!-- KPEPF (10) -->
-            <tr>
-                <td>KPEPF</td>
-                <td><input type="number" id="due_KPEPF" class="due-input" value="10" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_JUNE" type="checkbox" onchange="saveTask(this,'KPEPF','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_JULY" type="checkbox" onchange="saveTask(this,'KPEPF','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_AUGUST" type="checkbox" onchange="saveTask(this,'KPEPF','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_SEPTEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_OCTOBER" type="checkbox" onchange="saveTask(this,'KPEPF','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_NOVEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="KPEPF_DECEMBER" type="checkbox" onchange="saveTask(this,'KPEPF','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_KPEPF" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('KPEPF')">Update</button></div></td>
-            </tr>
-
-            <!-- SOOCHIKA 2 (10) -->
-            <tr>
-                <td>SOOCHIKA 2</td>
-                <td><input type="number" id="due_SOOCHIKA2" class="due-input" value="10" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA2_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA2','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA2" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA2')">Update</button></div></td>
-            </tr>
-
-            <!-- NPS (15) -->
-            <tr>
-                <td>NPS</td>
-                <td><input type="number" id="due_NPS" class="due-input" value="15" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="NPS_JUNE" type="checkbox" onchange="saveTask(this,'NPS','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_JULY" type="checkbox" onchange="saveTask(this,'NPS','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_AUGUST" type="checkbox" onchange="saveTask(this,'NPS','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_SEPTEMBER" type="checkbox" onchange="saveTask(this,'NPS','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_OCTOBER" type="checkbox" onchange="saveTask(this,'NPS','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_NOVEMBER" type="checkbox" onchange="saveTask(this,'NPS','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="NPS_DECEMBER" type="checkbox" onchange="saveTask(this,'NPS','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_NPS" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('NPS')">Update</button></div></td>
-            </tr>
-
-            <!-- MEDISEP (15) -->
-            <tr>
-                <td>MEDISEP</td>
-                <td><input type="number" id="due_MEDISEP" class="due-input" value="15" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_JUNE" type="checkbox" onchange="saveTask(this,'MEDISEP','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_JULY" type="checkbox" onchange="saveTask(this,'MEDISEP','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_AUGUST" type="checkbox" onchange="saveTask(this,'MEDISEP','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_SEPTEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_OCTOBER" type="checkbox" onchange="saveTask(this,'MEDISEP','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_NOVEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="MEDISEP_DECEMBER" type="checkbox" onchange="saveTask(this,'MEDISEP','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_MEDISEP" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('MEDISEP')">Update</button></div></td>
-            </tr>
-
-            <!-- SOOCHIKA 3 (20) -->
-            <tr>
-                <td>SOOCHIKA 3</td>
-                <td><input type="number" id="due_SOOCHIKA3" class="due-input" value="20" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_JUNE" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_JULY" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_AUGUST" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_OCTOBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_NOVEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SOOCHIKA3_DECEMBER" type="checkbox" onchange="saveTask(this,'SOOCHIKA3','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SOOCHIKA3" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SOOCHIKA3')">Update</button></div></td>
-            </tr>
-
-            <!-- SALARY (25) -->
-            <tr>
-                <td>SALARY</td>
-                <td><input type="number" id="due_SALARY" class="due-input" value="25" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SALARY_JUNE" type="checkbox" onchange="saveTask(this,'SALARY','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SALARY_JULY" type="checkbox" onchange="saveTask(this,'SALARY','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SALARY_AUGUST" type="checkbox" onchange="saveTask(this,'SALARY','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SALARY_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SALARY','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SALARY_OCTOBER" type="checkbox" onchange="saveTask(this,'SALARY','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SALARY_NOVEMBER" type="checkbox" onchange="saveTask(this,'SALARY','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SALARY_DECEMBER" type="checkbox" onchange="saveTask(this,'SALARY','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SALARY" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SALARY')">Update</button></div></td>
-            </tr>
-
-            <!-- SAND PERMIT (28) -->
-            <tr>
-                <td>SAND PERMIT</td>
-                <td><input type="number" id="due_SANDPERMIT" class="due-input" value="28" min="1" max="31" onchange="checkOverdue(false)"></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_JUNE" type="checkbox" onchange="saveTask(this,'SANDPERMIT','JUNE')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_JULY" type="checkbox" onchange="saveTask(this,'SANDPERMIT','JULY')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_AUGUST" type="checkbox" onchange="saveTask(this,'SANDPERMIT','AUGUST')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_SEPTEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','SEPTEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_OCTOBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','OCTOBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_NOVEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','NOVEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="cell-wrapper"><input id="SANDPERMIT_DECEMBER" type="checkbox" onchange="saveTask(this,'SANDPERMIT','DECEMBER')"><span class="warning-icon" title="Task Overdue!">⚠️</span></div></td>
-                <td><div class="remark-wrapper"><input type="text" id="remark_SANDPERMIT" class="remark-input" placeholder="Type note..."><button class="remark-btn" onclick="submitRemark('SANDPERMIT')">Update</button></div></td>
-            </tr>
-
-        </table>
-        <div style="height: 10px;"></div>
-    </div>
-</div>
-
-<div id="unifiedPopup" class="popup-overlay" onclick="closePopup(event)">
-    <div class="popup-content">
-        <span class="close-btn" onclick="closePopup()">&times;</span>
-        <div class="popup-icon" id="popupIcon">ℹ️</div>
-        <h3 id="popupTitle">Notification</h3>
-        <p id="popupMessage">Message</p>
-    </div>
-</div>
-
-<form id="sheetForm" action="https://script.google.com/macros/s/AKfycbw0PapfGV2EzedEi81m__Z47iuFSdV2cBCuYDxsKIjjv4XjauTRQ3EgkTnrW6vbjV7_IA/exec" method="POST" target="hiddenFrame">
-    <input type="hidden" name="action" id="actionField" value="saveTask">
-    <input type="hidden" name="task" id="task">
-    <input type="hidden" name="month" id="month">
-    <input type="hidden" name="status" id="statusField">
-    <input type="hidden" name="date" id="date">
-    <input type="hidden" name="dueDate" id="dueDateField"> 
-    <input type="hidden" name="remark" id="remarkField"> 
-</form>
-
-<iframe name="hiddenFrame" id="hiddenFrame" style="display:none"></iframe>
-
-<script>
-document.getElementById('hiddenFrame').addEventListener('load', handleIframeLoad);
-
-const monthMap = { 'JUNE': 5, 'JULY': 6, 'AUGUST': 7, 'SEPTEMBER': 8, 'OCTOBER': 9, 'NOVEMBER': 10, 'DECEMBER': 11 };
-
-function setLoader(state, text = "") {
-    const loader = document.getElementById("topLoader");
-    const loaderText = document.getElementById("loaderText");
-    if (state === "show") { loaderText.innerText = text; loader.classList.add("show"); } 
-    else { loader.classList.remove("show"); }
-}
-setLoader("show", "Connecting to Database...");
-
-function checkOverdue(triggerStartupPopup = false) {
-    const today = new Date();
-    const currentMonth = today.getMonth(); 
-    const currentDay = today.getDate();
-    let hasOverdue = false;
-
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        const wrapper = cb.closest('.cell-wrapper');
-        const parts = cb.id.split('_');
-        const taskName = parts[0];
-        const monthStr = parts[1];
-        const targetMonth = monthMap[monthStr];
+    <!-- Main Dashboard Container -->
+    <main class="container mx-auto p-6 mt-6">
         
-        const dueInput = document.getElementById('due_' + taskName);
-        const dueDate = parseInt(dueInput.value) || 5;
+        <!-- Home Page Heading -->
+        <header class="mb-10 text-center md:text-left text-gray-800 border-b pb-4">
+            <h1 class="text-4xl font-extrabold uppercase tracking-tight">Manjeshwar Grama Panchayath</h1>
+            <p class="text-gray-500 mt-2 text-lg">Administrative Dashboard</p>
+        </header>
 
-        let isOverdue = false;
-        if (targetMonth !== undefined) {
-            if (currentMonth > targetMonth) {
-                isOverdue = true;
-            } else if (currentMonth === targetMonth && currentDay >= dueDate) {
-                isOverdue = true;
-            }
-        }
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Task Bar Card -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 p-3 rounded-full mr-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Task Bar</h2>
+                </div>
+                <p class="text-gray-600 mb-5">Manage ongoing administrative tasks, website updates, and daily operations.</p>
+                <ul class="space-y-3 text-sm text-gray-700 mb-6">
+                    <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> Update building tax collection records</li>
+                    <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> Review technical maintenance bills</li>
+                    <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span> Schedule digital portal updates</li>
+                </ul>
+                <button class="w-full bg-blue-50 text-blue-700 font-semibold py-2 rounded border border-blue-200 hover:bg-blue-100 transition">View All Tasks</button>
+            </div>
 
-        if (!cb.checked && isOverdue) {
-            wrapper.classList.add('overdue');
-            hasOverdue = true;
-        } else {
-            wrapper.classList.remove('overdue');
-        }
-    });
+            <!-- Job Card -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-100 p-3 rounded-full mr-4">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800">Job Cards</h2>
+                </div>
+                <p class="text-gray-600 mb-5">Access employment records and MGNREGA job card details for the panchayath.</p>
+                <div class="bg-gray-50 rounded p-4 mb-6 space-y-2 border">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600 font-medium">Active Job Cards</span>
+                        <span class="text-lg font-bold text-gray-800">1,245</span>
+                    </div>
+                    <div class="flex justify-between items-center border-t pt-2">
+                        <span class="text-gray-600 font-medium">Pending Approvals</span>
+                        <span class="text-lg font-bold text-orange-500">14</span>
+                    </div>
+                </div>
+                <button class="w-full bg-green-50 text-green-700 font-semibold py-2 rounded border border-green-200 hover:bg-green-100 transition">Manage Job Cards</button>
+            </div>
 
-    if (triggerStartupPopup && hasOverdue) {
-        triggerPopup("⚠️", "Tasks Pending", "You have overdue tasks. Please review the ⚠️ icons and complete them.", "#b45309");
-    }
-}
-
-let isSubmitting = false; 
-
-function saveTask(box, taskKey, month){
-    const timestamp = new Date().toLocaleString();
-    const dueValue = document.getElementById('due_' + taskKey).value;
-
-    let displayName = taskKey.replace(/([A-Z])([0-9])/g, '$1 $2');
-    if(displayName === "DATABASEBACKUP") displayName = "DATABASE BACKUP";
-    if(displayName === "WARROOM") displayName = "WAR ROOM";
-    if(displayName === "SANDPERMIT") displayName = "SAND PERMIT";
-
-    document.getElementById("actionField").value = "saveTask"; 
-    document.getElementById("task").value = taskKey;
-    document.getElementById("month").value = month;
-    document.getElementById("statusField").value = box.checked;
-    document.getElementById("date").value = timestamp;
-    document.getElementById("dueDateField").value = dueValue; 
-
-    checkOverdue(false);
-
-    if (box.checked) {
-        triggerPopup("✅", "Task Completed!", `Great job! ${displayName} for ${month} has been successfully completed and recorded.`, "#1e3a8a");
-    }
-
-    isSubmitting = true;
-    setLoader("show", "Syncing Update...");
-    document.getElementById("sheetForm").submit();
-
-    setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
-}
-
-function submitRemark(taskKey) {
-    const remarkInput = document.getElementById('remark_' + taskKey);
-    const remarkText = remarkInput.value.trim();
-
-    let displayName = taskKey.replace(/([A-Z])([0-9])/g, '$1 $2');
-    if(displayName === "DATABASEBACKUP") displayName = "DATABASE BACKUP";
-    if(displayName === "WARROOM") displayName = "WAR ROOM";
-    if(displayName === "SANDPERMIT") displayName = "SAND PERMIT";
-
-    if (!remarkText) {
-        triggerPopup("❌", "Empty Remark", "Please type a remark in the text box before updating.", "#b45309");
-        return;
-    }
-
-    document.getElementById("actionField").value = "saveRemark"; 
-    document.getElementById("task").value = taskKey;
-    document.getElementById("remarkField").value = remarkText;
-
-    isSubmitting = true;
-    setLoader("show", "Saving Remark...");
-    document.getElementById("sheetForm").submit();
-
-    triggerPopup("📝", "Remark Logged", `Your note for ${displayName} was securely sent to the database.`, "#1e3a8a");
-    setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
-}
-
-function handleIframeLoad() { if (isSubmitting) completeSync(); }
-function completeSync() { isSubmitting = false; setLoader("hide"); }
-
-function loadSavedData(data){
-    if(data.tasks) {
-        data.tasks.forEach(row => {
-            if(String(row.status).toUpperCase() == "TRUE"){
-                const id = row.task + "_" + row.month;
-                const cb = document.getElementById(id);
-                if(cb) cb.checked = true;
-            }
-            if (row.dueDate) {
-                const dueInput = document.getElementById('due_' + row.task);
-                if (dueInput) dueInput.value = row.dueDate;
-            }
-        });
-    }
-
-    if(data.remarks) {
-        for (const [taskName, remarkText] of Object.entries(data.remarks)) {
-            const remarkInput = document.getElementById('remark_' + taskName);
-            if (remarkInput) {
-                remarkInput.value = remarkText; 
-            }
-        }
-    }
-    
-    setLoader("hide");
-    checkOverdue(true); 
-}
-
-function triggerPopup(icon, title, message, titleColor) {
-    document.getElementById("popupIcon").innerText = icon;
-    const titleEl = document.getElementById("popupTitle");
-    titleEl.innerText = title;
-    titleEl.style.color = titleColor;
-    document.getElementById("popupMessage").innerHTML = message;
-    document.getElementById("unifiedPopup").classList.add("active");
-}
-
-function closePopup(event) {
-    if (!event || event.target.id === 'unifiedPopup' || event.target.className === 'close-btn') {
-        document.getElementById("unifiedPopup").classList.remove("active");
-    }
-}
-
-const script = document.createElement("script");
-script.src = "https://script.google.com/macros/s/AKfycbw0PapfGV2EzedEi81m__Z47iuFSdV2cBCuYDxsKIjjv4XjauTRQ3EgkTnrW6vbjV7_IA/exec?callback=loadSavedData";
-document.body.appendChild(script);
-</script>
+        </div>
+    </main>
 
 </body>
 </html>
