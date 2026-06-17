@@ -24,27 +24,39 @@ body { background-color: #f1f5f9; background-image: radial-gradient(#e2e8f0 1px,
 .header h1 { font-size: 28px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 .header h2 { font-size: 16px; font-weight: 600; letter-spacing: 2px; color: #fef3c7; text-transform: uppercase; background: rgba(0,0,0,0.15); display: inline-block; padding: 4px 12px; border-radius: 20px;}
 
-.table-wrapper { overflow-x: auto; width: 100%; background: #fff;}
+/* Scrollable Table Container */
+.table-wrapper { overflow: auto; width: 100%; max-height: 70vh; background: #fff;}
 table { width: max-content; border-collapse: separate; border-spacing: 0; min-width: 100%;}
-th, td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #f1f5f9; }
-th { background: #f8fafc; color: #475569; font-weight: 700; font-size: 13px; position: sticky; top: 0; z-index: 5;}
-tr:hover td { background: #fefce8; }
+th, td { padding: 8px 4px; text-align: center; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #f1f5f9; font-size: 13px;}
 
-/* Sticky Column Magic */
-.sticky-col { position: sticky; left: 0; background-color: #ffffff; z-index: 10; font-weight: 700; font-size: 14px; text-align: left; padding-left: 20px; border-right: 3px solid #cbd5e1; box-shadow: 2px 0 5px rgba(0,0,0,0.05);}
-tr:hover .sticky-col { background-color: #fefce8; }
-th.sticky-col { background-color: #f8fafc; z-index: 15; }
+/* Top Row Sticky */
+th { background: #f8fafc; color: #475569; font-weight: 700; font-size: 12px; position: sticky; top: 0; z-index: 5; box-shadow: 0 2px 2px -1px rgba(0,0,0,0.1);}
 
+/* Multi-Column Sticky Magic (Left 4 Columns) */
+.col-1 { position: sticky; left: 0; width: 45px; min-width: 45px; background: #ffffff; z-index: 10; font-weight: 600;}
+.col-2 { position: sticky; left: 45px; width: 100px; min-width: 100px; background: #ffffff; z-index: 10; font-weight: 600; color: #475569;}
+.col-3 { position: sticky; left: 145px; width: 85px; min-width: 85px; background: #ffffff; z-index: 10; font-weight: 700; color: #1e3a8a;}
+.col-4 { position: sticky; left: 230px; width: 230px; min-width: 230px; background: #ffffff; z-index: 10; border-right: 3px solid #cbd5e1; text-align: left; padding-left: 10px; font-weight: 500;}
+
+/* Hover States for Sticky Columns */
+tr:hover td { background-color: #fefce8; }
+tr:hover .col-1, tr:hover .col-2, tr:hover .col-3, tr:hover .col-4 { background-color: #fefce8; }
+
+/* Corner Elements (Must stay above both X and Y scrolling) */
+th.col-1, th.col-2, th.col-3, th.col-4 { top: 0; z-index: 20; background: #f1f5f9; text-transform: uppercase;}
+
+/* Form Elements */
 .remark-wrapper { display: flex; gap: 4px; justify-content: center; align-items: center; padding: 0 10px;}
-.remark-input { width: 150px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; outline: none; transition: 0.2s;}
+.remark-input { width: 150px; padding: 6px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; outline: none; transition: 0.2s;}
 .remark-input:focus { border-color: #f59e0b; }
-.remark-btn { background: #b45309; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s;}
+.remark-btn { background: #b45309; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.2s;}
 .remark-btn:hover { background: #92400e; }
 
 input[type=checkbox] { appearance: none; width: 22px; height: 22px; background: #ffffff; border: 2px solid #cbd5e1; border-radius: 5px; cursor: pointer; position: relative; transition: all 0.2s ease; margin: 0; }
 input[type=checkbox]:checked { background: #10b981; border-color: #10b981; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3); }
 input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3px; top: -1px; color: white; font-weight: bold; font-size: 15px; }
 
+/* Notification Popup */
 .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s ease; z-index: 1000; }
 .popup-overlay.active { opacity: 1; visibility: visible; }
 .popup-content { background: #ffffff; border: 1px solid #e2e8f0; padding: 30px; border-radius: 16px; text-align: center; color: #0f172a; box-shadow: 0 20px 50px rgba(0,0,0,0.15); transform: translateY(20px) scale(0.95); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; max-width: 380px; width: 90%; }
@@ -86,6 +98,7 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
     </div>
 </div>
 
+<!-- Web App URL integrated here -->
 <form id="sheetForm" action="https://script.google.com/macros/s/AKfycbxASpKQTkTOzAdH-GCPjQH4jh_ml23qVGReh1hj8hf4zNRpvdLvyVhcVDhzIcT7209nAA/exec" method="POST" target="hiddenFrame">
     <input type="hidden" name="action" id="actionField">
     <input type="hidden" name="camera" id="cameraField">
@@ -100,6 +113,32 @@ input[type=checkbox]:checked:after { content: "✓"; position: absolute; left: 3
 <script>
 document.getElementById('hiddenFrame').addEventListener('load', handleIframeLoad);
 
+// --- Complete Asset Database from Image ---
+const assets = [
+    { sl: 1, type: "CC CAMERA", id: "MGPCC1", loc: "Durgippalla" },
+    { sl: 2, type: "CC CAMERA", id: "MGPCC2", loc: "Bangra Manjeshwar Bridge" },
+    { sl: 3, type: "CC CAMERA", id: "MGPCC3", loc: "Mada Anganavady" },
+    { sl: 4, type: "CC CAMERA", id: "MGPCC4", loc: "MCF Gerukatte" },
+    { sl: 5, type: "CC CAMERA", id: "MGPCC5", loc: "Near Block Manjeshwar" },
+    { sl: 6, type: "CC CAMERA", id: "MGPCC6", loc: "MCF Gerukatte" },
+    { sl: 7, type: "CC CAMERA", id: "MGPCC7", loc: "Kanwatheertha Beach" },
+    { sl: 8, type: "CC CAMERA", id: "MGPCC8", loc: "Kundukolake Beach" },
+    { sl: 9, type: "CC CAMERA", id: "MGPCC9", loc: "Kadappuram Beach" },
+    { sl: 10, type: "CC CAMERA", id: "MGPCC10", loc: "Take A Break Hosangadi" },
+    { sl: 11, type: "CC CAMERA", id: "MGPCC11", loc: "Mother India Ground Durgippalla" },
+    { sl: 12, type: "CC CAMERA", id: "MGPCC12", loc: "Behind Masco Hall Kunjathur" },
+    { sl: 13, type: "CC CAMERA", id: "MGPCC13", loc: "Padavu kunjathur" },
+    { sl: 14, type: "CC CAMERA", id: "MGPCC14", loc: "Govinda pai college road" },
+    { sl: 15, type: "CC CAMERA", id: "MGPCC15", loc: "Guddekeri Anganavadi" },
+    { sl: 16, type: "CC CAMERA", id: "MGPCC16", loc: "Near Krishi bhavan" },
+    { sl: 17, type: "CC CAMERA", id: "MGPCC17", loc: "Bangra Manjeshwar" },
+    { sl: 18, type: "CC CAMERA", id: "MGPCC18", loc: "Near Gudde School" },
+    { sl: 19, type: "CC CAMERA", id: "MGPCC19", loc: "Near GHS Kunjathur" },
+    { sl: 20, type: "CCTV SERVER", id: "MGPCS1", loc: "Manjeshwar GP Office" },
+    { sl: 21, type: "CC TV", id: "MGPCT1", loc: "Manjeshwar GP Office" },
+    { sl: 22, type: "CC CAMERA", id: "MGPCC20", loc: "Manjeshwar GP Office" }
+];
+
 // --- 1. Generate Dynamic Interface ---
 function buildInterface() {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -107,20 +146,32 @@ function buildInterface() {
     const currentYear = new Date().getFullYear();
     document.getElementById("monthTitle").innerText = `${currentMonth} ${currentYear}`;
 
-    let headHTML = '<tr><th class="sticky-col">CAMERA</th>';
+    // Table Header
+    let headHTML = '<tr>';
+    headHTML += '<th class="col-1">SL NO</th>';
+    headHTML += '<th class="col-2">ASSET TYPE</th>';
+    headHTML += '<th class="col-3">ASSET ID</th>';
+    headHTML += '<th class="col-4">INSTALLATION</th>';
     for(let i=1; i<=31; i++) { headHTML += `<th>${i}</th>`; }
     headHTML += '<th>REMARKS</th></tr>';
     document.getElementById("tableHead").innerHTML = headHTML;
 
+    // Table Body
     let bodyHTML = '';
-    for(let c=1; c<=5; c++) {
-        let camID = `Camera${c}`;
-        bodyHTML += `<tr><td class="sticky-col">Camera ${c}</td>`;
+    assets.forEach(asset => {
+        bodyHTML += `<tr>`;
+        bodyHTML += `<td class="col-1">${asset.sl}</td>`;
+        bodyHTML += `<td class="col-2">${asset.type}</td>`;
+        bodyHTML += `<td class="col-3">${asset.id}</td>`;
+        bodyHTML += `<td class="col-4">${asset.loc}</td>`;
+        
         for(let d=1; d<=31; d++) {
-            bodyHTML += `<td><input type="checkbox" id="${camID}_${d}" onchange="saveCCTV(this, '${camID}', ${d})"></td>`;
+            // Using asset.id (e.g., MGPCC1) to save securely to the database
+            bodyHTML += `<td><input type="checkbox" id="${asset.id}_${d}" onchange="saveCCTV(this, '${asset.id}', ${d})"></td>`;
         }
-        bodyHTML += `<td><div class="remark-wrapper"><input type="text" id="remark_${camID}" class="remark-input" placeholder="Type status..."><button class="remark-btn" onclick="submitRemark('${camID}')">Update</button></div></td></tr>`;
-    }
+        bodyHTML += `<td><div class="remark-wrapper"><input type="text" id="remark_${asset.id}" class="remark-input" placeholder="Type status..."><button class="remark-btn" onclick="submitRemark('${asset.id}')">Update</button></div></td></tr>`;
+    });
+    
     document.getElementById("tableBody").innerHTML = bodyHTML;
 }
 
@@ -136,25 +187,23 @@ setLoader("show", "Connecting to Database...");
 
 let isSubmitting = false; 
 
-function saveCCTV(box, camera, day){
+function saveCCTV(box, assetID, day){
     const timestamp = new Date().toLocaleString();
 
     document.getElementById("actionField").value = "saveCCTV"; 
-    document.getElementById("cameraField").value = camera;
+    document.getElementById("cameraField").value = assetID;
     document.getElementById("dayField").value = day;
     document.getElementById("statusField").value = box.checked;
     document.getElementById("dateField").value = timestamp;
 
-    // POPUP REMOVED HERE: We now rely entirely on the loading banner for silent syncing.
-    
     isSubmitting = true;
     setLoader("show", "Syncing Record...");
     document.getElementById("sheetForm").submit();
     setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
 }
 
-function submitRemark(camera) {
-    const remarkInput = document.getElementById('remark_' + camera);
+function submitRemark(assetID) {
+    const remarkInput = document.getElementById('remark_' + assetID);
     const remarkText = remarkInput.value.trim();
 
     if (!remarkText) {
@@ -163,15 +212,14 @@ function submitRemark(camera) {
     }
 
     document.getElementById("actionField").value = "saveCCTVRemark"; 
-    document.getElementById("cameraField").value = camera;
+    document.getElementById("cameraField").value = assetID;
     document.getElementById("remarkField").value = remarkText;
 
     isSubmitting = true;
     setLoader("show", "Saving Remark...");
     document.getElementById("sheetForm").submit();
 
-    let displayCam = camera.replace("Camera", "Camera ");
-    triggerPopup("📝", "Remark Logged", `Security note for ${displayCam} was securely saved.`, "#1e3a8a");
+    triggerPopup("📝", "Remark Logged", `Security note for ${assetID} was securely saved.`, "#1e3a8a");
     setTimeout(() => { if (isSubmitting) completeSync(); }, 2500);
 }
 
@@ -183,6 +231,7 @@ function loadSavedData(data){
     if(data.cctv) {
         data.cctv.forEach(row => {
             if(String(row.status).toUpperCase() == "TRUE"){
+                // matches exact assetID (e.g. MGPCC1_5)
                 const id = row.camera + "_" + row.day;
                 const cb = document.getElementById(id);
                 if(cb) cb.checked = true;
